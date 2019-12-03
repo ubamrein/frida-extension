@@ -1,0 +1,208 @@
+{
+	"name": "frida-extension",
+	"displayName": "frida-extension",
+	"description": "Autocompletion, Definitions and scripts to use frida in vscode",
+	"version": "0.1.0",
+	"engines": {
+		"vscode": "^1.35.0"
+	},
+	"author": "Patrick Amrein",
+	"publisher": "UbiqueInnovationAG",
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onView:fridaTarget",
+		"onView:android-apkView",
+		"onLanguage:javascript"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.installFridaTools",
+				"title": "Install Frida"
+			},
+			{
+				"command": "frida.downloadFrida",
+				"title": "Download Frida"
+			},
+			{
+				"command": "fridaTarget.refreshEntry",
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "apk.refreshEntry",
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "frida.getVersionForFolder",
+				"title": "Get frida-gadget.so"
+			},
+			{
+				"command": "apk.local.refreshEntry",
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "apk.install.refreshEntry",
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "apk.compress.refreshEntry",
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "extension.attachScriptToTarget",
+				"title": "Attach a script to a target"
+			},
+			{
+				"command": "extension.openScript",
+				"title": "Open script"
+			},
+			{
+				"command": "extension.startFrida",
+				"title": "Start Frida"
+			},
+			{
+				"command": "apk.extractApk",
+				"title": "Extract apk"
+			},
+			{
+				"command": "apk.zipApk",
+				"title": "Zip apk"
+			},
+			{
+				"command": "apk.installApk",
+				"title": "Install apk"
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "androidApkInjector",
+					"title": "Android APK injector",
+					"icon": "media/android.svg"
+				}
+			]
+		},
+		"views": {
+			"androidApkInjector": [
+				{
+					"id": "android-apkView",
+					"name": "Android APKS on device"
+				},
+				{
+					"id": "android-localPulled",
+					"name": "Android APKS local unpatched"
+				},
+				{
+					"id": "android-localReadyForZip",
+					"name": "Android extracted APKS"
+				},
+				{
+					"id": "android-localPulledPatched",
+					"name": "Android APKS local patched"
+				}
+			],
+			"explorer": [
+				{
+					"id": "fridaTarget",
+					"name": "Frida targets"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "fridaTarget.refreshEntry",
+					"when": "view == fridaTarget",
+					"group": "navigation"
+				},
+				{
+					"command": "apk.refreshEntry",
+					"when": "view == android-apkView",
+					"group": "navigation"
+				},
+				{
+					"command": "apk.local.refreshEntry",
+					"when": "view == android-localPulled",
+					"group": "navigation"
+				},
+				{
+					"command": "apk.compress.refreshEntry",
+					"when": "view == android-localReadyForZip",
+					"group": "navigation"
+				},
+				{
+					"command": "apk.install.refreshEntry",
+					"when": "view == android-localPulledPatched",
+					"group": "navigation"
+				},
+				{
+					"command": "extension.installFridaTools",
+					"when": "view == fridaTarget",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "extension.openScript",
+					"title": "Open script",
+					"when": "viewItem == fridaScript"
+				},
+				{
+					"command": "extension.startFrida",
+					"title": "Start frida repl for target",
+					"when": "viewItem == fridaTarget"
+				},
+				{
+					"command": "frida.getVersionForFolder",
+					"title": "Get frida-gadget.so",
+					"when": "viewItem == folder",
+					"group": "inline"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"@types/mocha": "^5.2.7",
+		"@types/node": "^12.11.1",
+		"tslint": "^5.20.0",
+		"typescript": "^3.6.4",
+		"vscode": "^1.1.36"
+	},
+	"dependencies": {
+		"@types/semver": "^6.2.0",
+		"frida-gum-types": "^6.0.0",
+		"semver": "^6.3.0",
+		"spawn-command": "0.0.2-1",
+		"spawncommand": "^2.2.0"
+	}
+}
